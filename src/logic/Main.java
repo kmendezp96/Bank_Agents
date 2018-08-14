@@ -11,14 +11,14 @@ import java.util.Random;
 public class Main {
 	
 	public static void main(String[] args){
-		ExecutorService service = null;
+
 		LinkedList<Client> clients = new LinkedList<>();
 		
 		ArrayList<Cashier> cashiers = new ArrayList<>();
 		ArrayList<Supervisor> supervisors = new ArrayList<>();
 		ArrayList<Director> directors = new ArrayList<>();
 		Random random = new Random(System.currentTimeMillis());
-		try{
+
 			//Object Pool
 			
 
@@ -45,20 +45,12 @@ public class Main {
 
 			directors.add(new Director(4,"Rodrigo Ramirez", true));
 			directors.add(new Director(5,"Felipe hernandez", true));
-			service = Executors.newFixedThreadPool(directors.size() + supervisors.size() + cashiers.size());
+
 			Dispatcher dispatcher = new Dispatcher(clients,cashiers, supervisors, directors);
 			System.out.println("Abre el banco");
-			for(int i = 0; i<10; i++){
-				CompletableFuture
-						.supplyAsync(dispatcher, service)
-						.thenAccept(response -> {
-							System.out.println("El cliente "+ response.getName()+ " fue atendido en "+ ((double)response.getAttentionTime()/1000)+" segundos.");
-						});
-			}
+			dispatcher.attend();
 			
-		}finally{
-			if(service != null) service.shutdown();
-		}
+
 		//System.out.println(clients.size());
 	}
 
