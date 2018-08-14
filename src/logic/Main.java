@@ -52,7 +52,7 @@ public class Main {
 				CompletableFuture
 						.supplyAsync(dispatcher, service)
 						.thenAccept(response -> {
-							System.out.println("El cliente "+ response.getName()+ " fue atendido en "+ ((double)response.getAttentionTime()/1000)+" segundos.");
+							System.out.println("El cliente "+ response.getClient().getName()+ " fue atendido en "+ ((double)response.getClient().getAttentionTime()/1000)+" segundos por "+response.getEmployee().getName());
 						});
 			}
 			

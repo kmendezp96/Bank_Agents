@@ -9,12 +9,16 @@ public abstract class Employee {
 	private boolean availableStatus;
 	
 	public Employee(int id, String name, boolean availableStatus) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.availableStatus = availableStatus;
 	}
-	
+
+	public Employee(){
+		this.id = 0;
+		this.name = "";
+		this.availableStatus = false;
+	}
 	
 
 	public int getId() {
