@@ -19,6 +19,7 @@ public class Main {
 		ArrayList<Director> directors = new ArrayList<>();
 		Random random = new Random(System.currentTimeMillis());
 
+		ArrayList<Employee> employees = new ArrayList<Employee>();
 			//Object Pool
 			
 
@@ -33,20 +34,22 @@ public class Main {
 			clients.add(new Client (9,"Raul Caicedo",random.nextInt(5000) + 10000,new Operation ("deposit", 30000), 80000));
 			clients.add(new Client (10,"Kevin Hernandez",random.nextInt(5000) + 10000,new Operation ("deposit", 30000), 80000));
 
-			cashiers.add(new Cashier(1,"Fabiola Hoyos", true));
-			cashiers.add(new Cashier(2,"German Perez", true));
-			cashiers.add(new Cashier(3,"Andrea Castillo", true));
-			cashiers.add(new Cashier(4,"Rodrigo Gamboa", true));
-			cashiers.add(new Cashier(5,"Tatiana hernandez", true));
+			employees.add(new Cashier(1,"Fabiola Hoyos", true));
+			employees.add(new Cashier(2,"German Perez", true));
+			employees.add(new Cashier(3,"Andrea Castillo", true));
+			employees.add(new Cashier(4,"Rodrigo Gamboa", true));
+			employees.add(new Cashier(5,"Tatiana hernandez", true));
 
-			supervisors.add(new Supervisor(1,"Fabian Hoyos", true));
-			supervisors.add(new Supervisor(2,"Fabio Perez", true));
-			supervisors.add(new Supervisor(3,"Camilo Castillo", true));
+			employees.add(new Supervisor(1,"Fabian Hoyos", true));
+			employees.add(new Supervisor(2,"Fabio Perez", true));
+			employees.add(new Supervisor(3,"Camilo Castillo", true));
 
-			directors.add(new Director(4,"Rodrigo Ramirez", true));
-			directors.add(new Director(5,"Felipe hernandez", true));
+			employees.add(new Director(4,"Rodrigo Ramirez", true));
+			employees.add(new Director(5,"Felipe hernandez", true));
 
-			Dispatcher dispatcher = new Dispatcher(clients,cashiers, supervisors, directors);
+
+
+			Dispatcher dispatcher = new Dispatcher(clients,cashiers, supervisors, directors,employees);
 			System.out.println("Abre el banco");
 			dispatcher.attend();
 			

@@ -1,5 +1,6 @@
 package logic;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.concurrent.CompletableFuture;
@@ -9,18 +10,21 @@ import java.util.function.Supplier;
 
 public class Dispatcher {
 	LinkedList<Client> clients;
-	
+
+	ArrayList<Employee> employees;
 	ArrayList<Cashier> cashiers;
 	ArrayList<Supervisor> supervisors;
 	ArrayList<Director> directors;
 	ExecutorService service;
 	public Dispatcher(LinkedList<Client> clients, ArrayList<Cashier> cashiers, ArrayList<Supervisor> supervisors,
-			ArrayList<Director> directors) {
+			ArrayList<Director> directors,ArrayList<Employee>  employees) {
 		this.clients = clients;
 		this.cashiers = cashiers;
 		this.supervisors = supervisors;
 		this.directors = directors;
-		this.service  = Executors.newFixedThreadPool(this.directors.size() + this.supervisors.size() + this.cashiers.size());
+
+		this.employees = employees;
+		this.service  = Executors.newFixedThreadPool(this.employees.size());
 	}
 
 	public void attend(){
@@ -36,59 +40,21 @@ public class Dispatcher {
 	}
 
 	public void assign(Client firstClient, ExecutorService service){
-		boolean attended = false;
-		for (int i = 0; i < this.cashiers.size(); i++) {
-			if (this.cashiers.get(i).isAvailableStatus()) {
-				this.cashiers.get(i).setAvailableStatus(false);
-				this.cashiers.get(i).setCurrentClient(firstClient);
-				//System.out.println(this.cashiers.get(i).getCurrentClient().getName());
-				attended = true;
+		Employee temp;
+			if (this.employees.get(0).isAvailableStatus()) {
+				temp = this.employees.remove(0);
+				temp.setAvailableStatus(false);
+				temp.setCurrentClient(firstClient);
 				CompletableFuture
-						.supplyAsync(this.cashiers.get(i), service)
+						.supplyAsync(temp, service)
 						.thenAccept(response -> {
-							System.out.println("El cliente "+ response.getName()+ " fue atendido en "+ ((double)response.getAttentionTime()/1000)+" segundos.");
+							System.out.println("El cliente " + response.getClient().getName() + " fue atendido en " + ((double) response.getClient().getAttentionTime() / 1000) + " segundos por " + response.getEmployee().getName());
 						});
-				this.cashiers.get(i).setAvailableStatus(true);
-				break;
+				temp.setAvailableStatus(true);
+				this.employees.add(temp);
 			}
-
-		}
-		if (!attended) {
-			for (int i = 0; i < this.supervisors.size(); i++) {
-
-				if (this.supervisors.get(i).isAvailableStatus()) {
-					this.supervisors.get(i).setAvailableStatus(false);
-					this.supervisors.get(i).setCurrentClient(firstClient);
-					attended = true;
-					CompletableFuture
-							.supplyAsync(this.supervisors.get(i), service)
-							.thenAccept(response -> {
-								System.out.println("El cliente "+ response.getName()+ " fue atendido en "+ ((double)response.getAttentionTime()/1000)+" segundos.");
-							});
-
-					this.supervisors.get(i).setAvailableStatus(true);
-					break;
-				}
-
-			}
-		}
-		if (!attended) {
-			for (int i = 0; i < this.directors.size(); i++) {
-				if (this.directors.get(i).isAvailableStatus()) {
-					this.directors.get(i).setAvailableStatus(false);
-					this.directors.get(i).setCurrentClient(firstClient);
-					attended = true;
-					CompletableFuture
-							.supplyAsync(this.directors.get(i), service)
-							.thenAccept(response -> {
-								System.out.println("El cliente "+ response.getName()+ " fue atendido en "+ ((double)response.getAttentionTime()/1000)+" segundos.");
-							});
-					this.directors.get(i).setAvailableStatus(true);
-					break;
-				}
-
-			}
-		}
+				//System.out.println(this.cashiers.get(i).getCurrentClient().getName());
+		//return temp;
 	}
 
 

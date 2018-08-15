@@ -2,7 +2,7 @@ package logic;
 
 import java.util.function.Supplier;
 
-public abstract class Employee implements Supplier<Client> {
+public abstract class Employee implements Supplier<Transaction> {
 	
 	private int id;
 	private String name;
@@ -10,10 +10,15 @@ public abstract class Employee implements Supplier<Client> {
 	private Client currentClient;
 	
 	public Employee(int id, String name, boolean availableStatus) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.availableStatus = availableStatus;
+		this.currentClient = null;
+	}
+	public Employee() {
+		this.id = 0;
+		this.name = "";
+		this.availableStatus = false;
 		this.currentClient = null;
 	}
 
@@ -90,13 +95,13 @@ public abstract class Employee implements Supplier<Client> {
 	}
 
 	@Override
-	public Client get(){
+	public Transaction get(){
 		//aqui cambia el valor de currentClient
 		Client tempClient;
 		System.out.println(this.currentClient.getName());
 		tempClient = this.makeOp(this.currentClient);
 
-		return tempClient;
+		return new Transaction(tempClient,this);
 
 	}
 }
