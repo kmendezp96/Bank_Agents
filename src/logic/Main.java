@@ -13,15 +13,10 @@ public class Main {
 	public static void main(String[] args){
 
 		LinkedList<Client> clients = new LinkedList<>();
-		
-		ArrayList<Cashier> cashiers = new ArrayList<>();
-		ArrayList<Supervisor> supervisors = new ArrayList<>();
-		ArrayList<Director> directors = new ArrayList<>();
+		ArrayList<Employee> employees = new ArrayList<Employee>();
 		Random random = new Random(System.currentTimeMillis());
 
-		ArrayList<Employee> employees = new ArrayList<Employee>();
 			//Object Pool
-			
 
 			clients.add(new Client (1,"Andres Ramirez",  random.nextInt(5000) + 10000 , new Operation ("deposit", 30000), 4000));
 			clients.add(new Client (2,"Felipe Rodriguez",random.nextInt(5000) + 10000,new Operation ("deposit", 2432), 4000));
@@ -40,7 +35,7 @@ public class Main {
 			employees.add(new Cashier(4,"Rodrigo Gamboa", true));
 			employees.add(new Cashier(5,"Tatiana hernandez", true));
 
-			employees.add(new Supervisor(1,"Fabian Hoyos", true));
+			employees.add(new Supervisor(1,"Alejandra Hoyos", true));
 			employees.add(new Supervisor(2,"Fabio Perez", true));
 			employees.add(new Supervisor(3,"Camilo Castillo", true));
 
@@ -49,7 +44,7 @@ public class Main {
 
 
 
-			Dispatcher dispatcher = new Dispatcher(clients,cashiers, supervisors, directors,employees);
+			Dispatcher dispatcher = new Dispatcher(clients,employees);
 			System.out.println("Abre el banco");
 			dispatcher.attend();
 			

@@ -96,9 +96,7 @@ public abstract class Employee implements Supplier<Transaction> {
 
 	@Override
 	public Transaction get(){
-		//aqui cambia el valor de currentClient
 		Client tempClient;
-		System.out.println(this.currentClient.getName());
 		tempClient = this.makeOp(this.currentClient);
 
 		return new Transaction(tempClient,this);
