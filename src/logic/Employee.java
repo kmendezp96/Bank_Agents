@@ -8,19 +8,16 @@ public abstract class Employee implements Supplier<Transaction> {
 	private String name;
 	private boolean availableStatus;
 	private Client currentClient;
+	private int level;
 	
 	public Employee(int id, String name, boolean availableStatus) {
 		this.id = id;
 		this.name = name;
 		this.availableStatus = availableStatus;
 		this.currentClient = null;
+		this.level = 0;
 	}
-	public Employee() {
-		this.id = 0;
-		this.name = "";
-		this.availableStatus = false;
-		this.currentClient = null;
-	}
+
 
 	public int getId() {
 		return id;
@@ -56,50 +53,57 @@ public abstract class Employee implements Supplier<Transaction> {
 		//System.out.println(this.currentClient.getName());
 	}
 
-	public boolean makeADeposit(double amount, Client client){
-		client.setMoney(client.getMoney() + amount);
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+	public boolean makeADeposit(double amount){
+		this.currentClient.setMoney(this.currentClient.getMoney() + amount);
 		return true;
 	}
 	
-	public boolean makeAWithdrawal(double amount, Client client){
-		if (client.getMoney()<amount){
+	public boolean makeAWithdrawal(double amount){
+		if (this.currentClient.getMoney()<amount){
 			return false;
 		}
 		else {
-			client.setMoney(client.getMoney()-amount);
+			this.currentClient.setMoney(this.currentClient.getMoney()-amount);
 			return true;
 		}
 	}
-	public boolean resolveCustomerIssue(String issue, Client client){
+	public boolean resolveCustomerIssue(String issue){
 		return Math.random() < 0.5;
 	}
 
-	public Client makeOp(Client firstClient) {
+	public Client makeOperation() {
 		try {
-			//System.out.println(firstClient.getName());
-
-			Thread.sleep(firstClient.getAttentionTime());
-			if (firstClient.getOperation().getIntention().equals("deposit")) {
-				this.makeADeposit(firstClient.getOperation().getAmount(), firstClient);
-			} else if (firstClient.getOperation().getIntention().equals("withdrawal")) {
-				this.makeAWithdrawal(firstClient.getOperation().getAmount(), firstClient);
-			} else if (firstClient.getOperation().getIntention().equals("resolve customer issue")) {
-				this.resolveCustomerIssue(firstClient.getOperation().getIssue(), firstClient);
+			Thread.sleep(this.currentClient.getAttentionTime());
+			if (this.currentClient.getOperation().getIntention().equals("deposit")) {
+				this.makeADeposit(this.currentClient.getOperation().getAmount());
+			} else if (this.currentClient.getOperation().getIntention().equals("withdrawal")) {
+				this.makeAWithdrawal(this.currentClient.getOperation().getAmount());
+			} else if (this.currentClient.getOperation().getIntention().equals("resolve customer issue")) {
+				this.resolveCustomerIssue(this.currentClient.getOperation().getIssue());
 			}
 
 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		return firstClient;
+		return this.currentClient;
 	}
 
 	@Override
 	public Transaction get(){
 		Client tempClient;
-		tempClient = this.makeOp(this.currentClient);
-
+		tempClient = this.makeOperation();
 		return new Transaction(tempClient,this);
 
 	}
+
+
 }

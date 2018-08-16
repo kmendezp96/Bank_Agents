@@ -18,16 +18,17 @@ public class Main {
 
 			//Object Pool
 
-			clients.add(new Client (1,"Andres Ramirez",  random.nextInt(5000) + 10000 , new Operation ("deposit", 30000), 4000));
+			clients.add(new Client (1,"Andres Ramirez",  random.nextInt(5000) + 10000 , new Operation ("resolve customer issue", "bad service"), 4000));
 			clients.add(new Client (2,"Felipe Rodriguez",random.nextInt(5000) + 10000,new Operation ("deposit", 2432), 4000));
-			clients.add(new Client (3,"Antonio Castillo",random.nextInt(5000) + 10000,new Operation ("deposit", 4543), 564564));
+			clients.add(new Client (3,"Antonio Castillo",random.nextInt(5000) + 10000,new Operation ("withdrawal", 4543), 564564));
 			clients.add(new Client (4,"Daniel Ruiz",random.nextInt(5000) + 10000,new Operation ("deposit", 4322), 7000));
-			clients.add(new Client (5,"Federico Valderrama",random.nextInt(5000) + 10000,new Operation ("deposit", 30000), 80000));
+			clients.add(new Client (5,"Federico Valderrama",random.nextInt(5000) + 10000,new Operation ("withdrawal", 30000), 80000));
 			clients.add(new Client (6,"Camilo Mendez",random.nextInt(5000) + 10000,new Operation ("deposit", 30000), 80000));
-			clients.add(new Client (7,"Michael Martinez",random.nextInt(5000) + 10000,new Operation ("deposit", 30000), 80000));
+			clients.add(new Client (7,"Michael Martinez",random.nextInt(5000) + 10000,new Operation ("resolve customer issue", "Wrong information"), 80000));
 			clients.add(new Client (8,"Luis Casas",random.nextInt(5000) + 10000,new Operation ("deposit", 30000), 80000));
-			clients.add(new Client (9,"Raul Caicedo",random.nextInt(5000) + 10000,new Operation ("deposit", 30000), 80000));
+			clients.add(new Client (9,"Raul Caicedo",random.nextInt(5000) + 10000,new Operation ("withdrawal", 30000), 500000));
 			clients.add(new Client (10,"Kevin Hernandez",random.nextInt(5000) + 10000,new Operation ("deposit", 30000), 80000));
+			//clients.add(new Client (10,"Finalito",random.nextInt(5000) + 10000,new Operation ("deposit", 30000), 80000));
 
 			employees.add(new Cashier(1,"Fabiola Hoyos", true));
 			employees.add(new Cashier(2,"German Perez", true));
