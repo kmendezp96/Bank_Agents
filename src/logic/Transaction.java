@@ -1,5 +1,10 @@
 package logic;
 
+/*
+ * @author Kevin Mendez
+ * @version 2.0
+ * This class represent the transaction that includes one Client and one Employee
+ * */
 public class Transaction {
     private Client client;
     private Employee employee;
@@ -13,15 +18,8 @@ public class Transaction {
         return client;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
     public Employee getEmployee() {
         return employee;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
 }

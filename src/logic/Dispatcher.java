@@ -12,6 +12,12 @@ import java.util.concurrent.Executors;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+/*
+ * @author Kevin Mendez
+ * @version 2.0
+ * The Dispatcher class must assign the clients to the employees, it have the list of clients, emplooyes and the Executor Service
+ * */
+
 public class Dispatcher {
 	private LinkedList<Client> clients;
 
@@ -25,6 +31,9 @@ public class Dispatcher {
 		this.waitingClients = new LinkedList<>();
 	}
 
+	/*
+	 * this method attend all the clients
+	 */
 	public void attend(){
 		while (clients.size()>employees.size()){
 				waitingClients.add(clients.pop());
@@ -43,6 +52,10 @@ public class Dispatcher {
 
 	}
 
+	/*
+	 * this method assign the client to the corresponding employee
+	 * @param the client to be assigned
+	 */
 	public void assign(Client firstClient){
 		Employee temp;
 		if (this.employees.get(0).isAvailableStatus()) {
@@ -64,7 +77,9 @@ public class Dispatcher {
 
 		}
 	}
-
+	/*
+	 * this method order the employees list in Cashiers first, the the supervisors and then the directors
+	 */
 	public List<Employee> order(){
 		return employees.stream()
 				.sorted(Comparator.comparingInt(Employee::getLevel))
